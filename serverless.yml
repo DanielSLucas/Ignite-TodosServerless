@@ -23,18 +23,25 @@ provider:
   name: aws
 
 functions:
-  hello:
-    handler: src/functions/hello.handle
+  createTodo:
+    handler: src/functions/createTodo.handle
     events: 
       - http:
-          path: /hello
+          path: /createTodo/{userid}
+          method: POST
+          cors: true
+  getUserTodo:
+    handler: src/functions/getUserTodo.handle
+    events: 
+      - http:
+          path: /getUserTodo/{userid}
           method: GET
           cors: true
 
 resources:
   Resources:
     dbTodos:
-      Type: AWS::Dynamo::Table
+      Type: AWS::DynamoDB::Table
       Properties:
         TableName: todos
         AttributeDefinitions:
